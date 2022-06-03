@@ -13,12 +13,12 @@ contract Poq {
     address public owner;
 
     constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _totalSupply) {
+        owner = msg.sender;
+        _balances[owner] = totalSupply;
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
         totalSupply = _totalSupply;
-        owner = msg.sender;
-        _balances[owner] = totalSupply;
     }
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
@@ -41,7 +41,6 @@ contract Poq {
         _balances[_to] += _value;
 
         emit Transfer(msg.sender, _to, _value);
-
         return true;
     }
 
@@ -52,11 +51,9 @@ contract Poq {
 
         _balances[_from] -= _value;
         _balances[_to] += _value;
-
         // _allowances[_from][_to] -= _value;
 
         emit Transfer(_from, _to, _value);
-
         return true;
     }
 
@@ -64,7 +61,6 @@ contract Poq {
         _allowances[msg.sender][_account] = _value;
 
         emit Approval(msg.sender, _account, _value);
-
         return true;
     }
 
@@ -75,7 +71,6 @@ contract Poq {
         _balances[_account] += _value;
 
         emit Transfer(address(0x0), _account, _value);
-
         return true;
     }
 
@@ -86,7 +81,6 @@ contract Poq {
         _balances[_account] -= _value;
 
         emit Transfer(_account, address(0x0), _value);
-
         return true;
     }
 
