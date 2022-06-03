@@ -10,7 +10,7 @@ contract Poq {
     string public symbol;
     uint8 public decimals;
     uint256 public totalSupply;
-    address public owner;  
+    address public owner;
 
     constructor(string memory _name, string memory _symbol, uint8 _decimals, uint256 _totalSupply) {
         name = _name;
@@ -23,8 +23,6 @@ contract Poq {
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
-    event Mint(address indexed _to, uint256 _value);
-    event Burn(address indexed _from, uint256 _value);
 
 
     function balanceOf(address _account) public view returns (uint256 _balance) {
@@ -76,12 +74,10 @@ contract Poq {
         totalSupply += _value;
         _balances[_account] += _value;
 
-        // emit Transfer(address(0), _account, _value);
-        emit Mint(_account, _value);
+        emit Transfer(address(0x0), _account, _value);
 
         return true;
     }
-
 
     function burn(address _account, uint256 _value) public returns (bool success) {
         require(msg.sender == owner, "Burn must call contract's owner");
@@ -89,10 +85,9 @@ contract Poq {
         totalSupply -= _value;
         _balances[_account] -= _value;
 
-        // emit Transfer(_account, address(0), _value);
-        emit Burn(_account, _value);
+        emit Transfer(_account, address(0x0), _value);
 
         return true;
     }
-    
+
 }
